@@ -14,4 +14,17 @@ global with sharing class ContactResource1 {
         List<contact> contactList = [SELECT id,Name FROM Contact WHERE leadSource =:leadSource LIMIT:contactLimit];
         return contactList;
     }
+
+
+    @HTTPPost
+    global static Contact createNewContact(){
+
+        RestRequest contactRequest = RestContext.request;
+        String requestBody = contactRequest.requestBody.toString();
+
+        Contact contact = (Contact) JSON.deserialize(requestBody, Contact.class);
+        insert contact;
+
+        return contact;
+    }
 }

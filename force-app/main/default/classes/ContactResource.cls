@@ -16,4 +16,17 @@ global with sharing class ContactResource {
         
         return contactList;
     }
+
+    @HTTPPost
+    global static Contact createNewContact(String firstName, String lastName , String birthDate, String leadSource){
+
+        Contact con = new COntact();
+        con.FirstName = firstName;
+        con.LastName = lastName;
+        con.LeadSource = leadSource;
+        con.Birthdate = Date.parse(birthDate);
+        
+        insert con;
+        return con;
+    }
 }

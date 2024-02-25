@@ -54,4 +54,47 @@ global with sharing class ContactResource {
         }
         return contactIdResponse;
     }
+
+    @HTTPPut
+    global static Contact upsertContact(String firstName, String lastName , String birthDate , String leadSource){
+
+        RestRequest contactRequest = RestContext.request;
+        String contactRequestURI = contactRequest.requestURI;
+
+        String conId = contactRequestURI.substring(contactRequestURI.lastIndexOf('/')+1);
+        Contact con = new Contact();
+
+        if(String.isNotEmpty(conId)){
+            con.Id = conId;
+        }
+        con.FirstName = firstName;
+        con.LastName = lastName;
+        con.Birthdate = Date.parse(birthDate);
+        con.LeadSource  = leadSource;
+
+        upsert con;
+        return con;
+
+    }
+
+    @HTTPPatch
+    global static Contact updateContact(){
+
+        RestRequest contactRequest = RestContext.request;
+        String contactRequestURI = contactRequest.requestURI;
+        String conid = contactRequestURI.substring(contactRequestURI.lastIndexOf('/')+1);
+
+        String requestBody = contactRequest.requestBody.toString();
+        
+        Contact contact; 
+        if(String.isNotEmpty(conid)){
+            contact =(Contact) JSON.deserialize(requestBody, Contact.class);
+            contact.Id = conid;
+            update contact;
+        }
+
+        return contact;
+    }
+
+
 }

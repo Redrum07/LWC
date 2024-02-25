@@ -76,4 +76,39 @@ global with sharing class ContactResource1 {
         return responseWrapperList;
     }
 
+
+    @HTTPPatch
+    global static List<Responsewrapper> updateContact(){
+
+        List<Responsewrapper> wrapperList = new List<Responsewrapper>();
+
+        RestRequest req = RestContext.request;
+        
+        String reqBody = req.requestBody.toString();
+       
+        List<Contact> contactsToUpdate = (List<Contact>) JSON.deserialize(reqBody, List<Contact>.class);
+
+        Database.SaveResult[] updateResults = Database.update(contactsToUpdate, false);
+
+        for(Database.SaveResult sr : updateResults){
+            Responsewrapper wrap = new Responsewrapper();
+
+            if(sr.isSuccess()){
+                wrap.success = '1';
+                wrap.message = 'Successfully u0035g00000r2potAAApdated the record with id: ' + sr.getId();
+            }
+            else{
+                wrap.success = '0';
+                for(Database.Error er : sr.getErrors()) {
+                    wrap.message = 'The following error has occurred for contact with Id : '+  sr.getId() ;
+                    wrap.message += er.getStatusCode() + ': ' + er.getMessage() + '. ';
+
+                }
+
+                
+            }
+            wrapperList.add(wrap);
+        }
+    return wrapperList;
+    }
 }

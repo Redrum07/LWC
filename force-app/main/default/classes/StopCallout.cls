@@ -22,6 +22,7 @@ public with sharing class StopCallout {
                 }
             }
         }
+        
         else if (response.getStatusCode() == 404){
             System.debug(response.getStatus().toString());
         }

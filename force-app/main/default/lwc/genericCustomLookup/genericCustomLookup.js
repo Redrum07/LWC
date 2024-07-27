@@ -41,9 +41,11 @@ clickHandler(event){
     let outputRecord = this.records.data.find(record => record.id === selectedId);
 
     this.selectedRecord={
-        Id : outputRecord.id,
+        Id : outputRecord.Id,
         Name : outputRecord.Name
     }
+    
+    this.sendSelectedId();
     this.display = false;
 }
 
@@ -52,7 +54,13 @@ handleRemoval(event){
         Id :"",
         Name : ""
     }
+    this.sendSelectedId();
     this.display = false;
     }
 
+    sendSelectedId(){
+        this.dispatchEvent(new CustomEvent('filterselected',{
+            detail :  this.selectedRecord.Id
+        }))
+    }
 }

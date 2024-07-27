@@ -1,0 +1,40 @@
+<template>
+  <div>
+    <c-filter-component onfilters={handleFilters}></c-filter-component>
+  </div>
+  <div>
+    <template lwc:if={contacts.data}>
+      <lightning-tabset variant="scoped">
+        <lightning-tab label="Grid">
+          <lightning-datatable
+            key-field="contacts.data.Id"
+            data={contacts.data}
+            columns={columns}
+          >
+          </lightning-datatable>
+        </lightning-tab>
+
+        <lightning-tab label="Gallery"> 
+            
+            <template for:each={contacts.data} for:item="contact">
+                    <div class="slds-var-p-vertical_small" key={contact.Id}>
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                               <img src={contact.PhotoUrl} alt={contact.Name} />
+                            </div>
+                            <div class="slds-media__body">
+                                <p class="slds-var-m-bottom_xx-small">{contact.Name}</p>
+                                <p class="slds-var-m-bottom_xx-small">{contact.Title}</p>
+                                <p class="slds-var-m-bottom_xx-small">{contact.Email}</p>
+                                <p class="slds-var-m-bottom_xx-small">{contact.Phone}</p>
+                            </div>
+                        </div>
+                    </div>
+            </template>
+        
+
+        </lightning-tab>
+      </lightning-tabset>
+    </template>
+  </div>
+</template>

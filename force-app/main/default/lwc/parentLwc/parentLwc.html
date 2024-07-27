@@ -1,0 +1,10 @@
+<template>
+    <lightning-card title="Full Name Generator">
+    <div class="slds-p-around_medium">
+        <lightning-input type="text" label="First Name" onchange={changeHandler} value={fname}></lightning-input>
+        <lightning-input type="text" label="Last Name" onchange={changeHandler} value={lname}></lightning-input>
+    </div>
+    <c-child-component f-name={fname} l-name={lname} onmessagetoparent={handleMessage} ></c-child-component>
+</lightning-card>
+    
+</template>

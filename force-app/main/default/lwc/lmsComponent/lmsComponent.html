@@ -1,0 +1,15 @@
+<template>
+    <lightning-card title="Lightning Message Service" icon-name="custom:custom14">
+        <div class="slds-var-m-around_medium">
+            <template lwc:if={selectedContact}>
+
+                <p>{selectedContact.Name}</p>
+                <p>{selectedContact.Title}</p>
+                <p>{selectedContact.Phone}</p>
+                <p>{selectedContact.Email}</p>
+
+            </template>
+           
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,26 @@
+<template>
+  <lightning-card>
+    <lightning-layout class="slds-var-m-around_medium">
+      <lightning-layout-item>
+        <template lwc:if={contacts}>
+            <template for:each={contacts} for:item="contact">
+                <c-event-details-child
+                  onflick={handleEvent}
+                  contact={contact}
+                  key={contact.id}
+                ></c-event-details-child>
+              </template>
+        </template>
+        
+      </lightning-layout-item>
+      <lightning-layout-item class="slds-var-m-left_medium">
+        <template lwc:if={selectedContact}>
+          <p>{selectedContact.Name}</p>
+          <p>{selectedContact.Title}</p>
+          <p>{selectedContact.Phone}</p>
+          <p>{selectedContact.Email}</p>
+        </template>
+      </lightning-layout-item>
+    </lightning-layout>
+  </lightning-card>
+</template>

@@ -1,0 +1,28 @@
+<template>
+    <div class="slds-var-m-around_medium">
+        <lightning-card
+    title="Record View Form"
+    icon-name="standard:account"
+    >
+    <lightning-record-view-form
+    object-api-name={objectApiName}
+    record-id={recordId}
+
+>
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col">
+            <lightning-output-field field-name={fieldObject.Name}> </lightning-output-field>
+            <lightning-output-field field-name={fieldObject.Rating}> </lightning-output-field>
+        </div>
+        <div class="slds-col">
+            <lightning-output-field field-name={fieldObject.Type}> </lightning-output-field>
+            <lightning-output-field field-name={fieldObject.Phone}> </lightning-output-field>
+        
+        </div>
+        </div>
+</lightning-record-view-form>
+    </lightning-card>
+    </div>
+    
+   
+</template>

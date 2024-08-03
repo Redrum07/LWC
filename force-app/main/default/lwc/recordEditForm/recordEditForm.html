@@ -1,0 +1,28 @@
+<template>
+    <div class="slds-var-m-around_medium">
+       
+        <lightning-card
+            title="Record Edit Form - Create Mode"
+            icon-name="standard:account"
+            
+        >
+
+            <lightning-record-edit-form
+                object-api-name={objectApiName}
+                onsuccess={handleSuccess}
+                onerror={handleError}
+                onsubmit={handleSubmit}
+            >
+                <lightning-messages></lightning-messages>
+                <div class="slds-var-p-around_small">
+                    <lightning-input-field field-name={fieldObject.name}></lightning-input-field>
+                    <lightning-input-field field-name={fieldObject.industry}></lightning-input-field>
+                    <lightning-input-field field-name={fieldObject.sla}></lightning-input-field>
+                </div>
+                <div class="slds-var-p-around_small">
+                    <lightning-button type="submit" variant="brand"  label="Create Account" ></lightning-button>
+                </div>
+            </lightning-record-edit-form>
+    </lightning-card>
+    </div>
+</template>

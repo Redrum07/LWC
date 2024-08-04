@@ -54,4 +54,10 @@ export default class RecordEditForm extends NavigationMixin(
             }
             this.template.querySelector('lightning-record-edit-form').submit(fields);
         }
+
+        resetHandler(){
+           let inputFields = this.template.querySelectorAll('lightning-input-field');
+            
+           inputFields.forEach((crrItm) => crrItm.reset());
+        }
 }

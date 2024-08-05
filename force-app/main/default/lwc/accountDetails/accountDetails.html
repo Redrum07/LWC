@@ -1,0 +1,92 @@
+<template>
+  <lightning-card title="Create Account" icon-name="standard:account">
+    <div class="slds-grid slds-grid_vertical">
+      <div class="slds-col">
+        <lightning-combobox
+          name="parentAccount"
+          label="Select Parent Account"
+          placeholder="Select Account"
+          options={parentOptions}
+          onchange={handleChange}
+          message-when-value-missing="Please select Parent Account"
+          required
+        ></lightning-combobox>
+      </div>
+      <div class="slds-col">
+        <lightning-input
+          type="text"
+          label="Account Name"
+          onchange={handleAccount}
+          message-when-value-missing="Please enter Account Name"
+          min-length="3"
+          max-length="20"
+          message-when-too-long="Account Name must be between 3-20 characters"
+          message-when-too-short="Account Name must be between 3-20 characters"
+          value={accountName}
+          required
+        ></lightning-input>
+      </div>
+      <div class="slds-col">
+        <lightning-input
+          type="date"
+          name="slaExpDate"
+          label="SLA Expiration Date"
+          required
+          onchange={handleSlaDate}
+          value={slaExpirationDate}
+          message-when-value-missing="Please enter SLA Expiration Date"
+        ></lightning-input>
+      </div>
+      <template lwc:if={slaValues.data}>
+        <div class="slds-col">
+
+            <lightning-radio-group
+              label="SLA Type"
+              name="slaType"
+              options={slaValues.data.values}
+              required
+              type="button"
+              onchange={handleSlaType}
+              value={selectedSlaType}
+              message-when-value-missing="Please select SLA"
+            ></lightning-radio-group>
+          </div>
+      </template>
+      
+      <div class="slds-col">
+        <lightning-slider
+          label="Number of Locations"
+          min="1"
+          max="50"
+          value={noOfLocations}
+          step="1"
+          onchange={handleSlider}
+          name="locations"
+        ></lightning-slider>
+      </div>
+      <div class="slds-col">
+        <lightning-input-rich-text
+            label="Description"
+            label-visible="true"
+            value={myVal}
+            onchange={handleDescription}>
+        </lightning-input-rich-text>
+      </div>
+       
+
+      <div class="slds-col">
+
+        
+            <lightning-button
+            variant="brand"
+            label="Save"
+            onclick={createAccount}
+            ></lightning-button>
+
+      </div>
+
+
+    </div>
+    
+  </lightning-card>
+</template>

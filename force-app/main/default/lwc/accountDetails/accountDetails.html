@@ -1,6 +1,6 @@
 <template>
-  <lightning-card title="Create Account" icon-name="standard:account">
-    <div class="slds-grid slds-grid_vertical">
+  <lightning-card title={title} icon-name="standard:account">
+    <div class="slds-grid slds-grid_vertical slds-var-m-around_small">
       <div class="slds-col">
         <lightning-combobox
           name="parentAccount"
@@ -8,6 +8,7 @@
           placeholder="Select Account"
           options={parentOptions}
           onchange={handleChange}
+          value={selectedParent}
           message-when-value-missing="Please select Parent Account"
           required
         ></lightning-combobox>
@@ -72,21 +73,25 @@
             onchange={handleDescription}>
         </lightning-input-rich-text>
       </div>
-       
-
-      <div class="slds-col">
-
         
-            <lightning-button
-            variant="brand"
-            label="Save"
-            onclick={createAccount}
-            ></lightning-button>
-
-      </div>
-
-
+           
     </div>
+    <div class="slds-var-p-around_medium">
+      <lightning-button
+      variant="brand"
+      label="Save"
+      onclick={createAccount}
+      ></lightning-button>
+
+      <template lwc:if={delButton}>
+        <lightning-button
+          variant="destructive"
+          label="Delete"
+          onclick={deleteAccount}
+          class="slds-m-left_x-small"></lightning-button>
     
+        </template>
+    </div>
+      
   </lightning-card>
 </template>

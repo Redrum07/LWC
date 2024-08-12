@@ -62,25 +62,6 @@ export default class ToDo extends LightningElement {
 
     handleClick(){
         
-        //if date input is empty then fill the date input with today's date
-        // if(!this.taskdate){
-        //     this.taskdate = new Date().toISOString().slice(0,10);
-        // }
-        // // need to check if the task you entered already exists or not
-        // if( this.validateTask()){
-        //     this.incompleteTasks = [
-        //         ...this.incompleteTasks , 
-        //         {
-        //         taskname : this.taskname,
-        //         taskdate : this.taskdate
-        //         }
-        //     ];
-
-        //     this.resetInput();
-        //     this.incompleteTasks = [...this.sortedTaskList(this.incompleteTasks)];
-        //     console.log("incompletetasks", this.incompleteTasks);
-            
-        // }
             const infields = {};
                 infields[TM_NAME.fieldApiName] = this.taskname;
                 infields[TM_TASK_DATE.fieldApiName] = this.taskdate;
@@ -95,12 +76,12 @@ export default class ToDo extends LightningElement {
                 console.log('Record Created Successfully');
                 this.showToast('SUCCESS' , `Task created successfully` , 'success');
                 refreshApex(this.incompleteTasksData);
+                this.resetInput();
             })
             .catch(error => {
                 console.log(error);
                 this.showToast('ERROR' , `Task could not be created successfully` , 'error');
             });
-      
         
     }
 
@@ -109,67 +90,28 @@ export default class ToDo extends LightningElement {
         this.taskname = "";
     }
 
-    validateTask(){
-        
-        let isValid = true;
-        
-        let element = this.template.querySelector('.taskname')
-        if(!this.taskname){
-            isValid = false;
-        }
-        else{
-        let task = this.incompleteTasks.find(
-            (currentItem) =>
-                currentItem.taskname === this.taskname &&
-                currentItem.taskdate === this.taskdate
-            );
-        
-        if(task){
-            isValid = false;
-            element.setCustomValidity("Task already exists");
-        }
-    }
-        if(isValid){
-            element.setCustomValidity("");
-        }
-
-        element.reportValidity();
-        return isValid;
-    }
-    
-    sortedTaskList(inputArr){
-       
-      let sortedarray =   inputArr.sort((a,b) => {
-            const dateA = new Date(a.taskdate);
-            const dateB = new Date(b.taskdate);
-            return dateA- dateB;
-       });
-       return sortedarray;
-    }
 
     handleDelete(event){
-        this.showToast(
-            'SUCCESS' ,
-            `Task deleted successfully` ,
-            'error'
-        )
         
         deleteRecord(event.target.name).then(()=>{
+            this.showToast(
+                'SUCCESS' ,
+                `Task deleted successfully` ,
+                'error'
+            )
+            
             refreshApex(this.incompleteTasksData)
             console.log('Records deleted succesfully')
         })
-        
-        // let index = event.target.name;
-        // this.incompleteTasks.splice(index,1);
-        // this.incompleteTasks = [...this.sortedTaskList(this.incompleteTasks)];
-        
+         
     }
+
+
     handleCheck(event){
         let recordId = event.target.name;
         this.refreshData(recordId);
-        
-        
     }
+
     dragStartHandler(event){
          event.dataTransfer.setData("index", event.target.dataset.item);
     }
@@ -184,19 +126,16 @@ export default class ToDo extends LightningElement {
     }
 
    async refreshData(recordId){
-        // let x = this.incompleteTasks.splice(index,1);
-        // this.incompleteTasks = [...this.sortedTaskList(this.incompleteTasks)];
-        // this.completedTasks = [...this.completedTasks,x[0]];
-        let upfields = {};
-       
-        upfields[TM_ID.fieldApiName] = recordId;
-        upfields[TM_ISCOMPLETED.fieldApiName] = true ;
-        upfields[TM_COMPLETED_DATE.fieldApiName]  = new Date().toISOString.slice(0,10);
+        const fields = {};
 
-        console.log(upfields);
+        fields[TM_ID.fieldApiName] = recordId;
+        fields[TM_ISCOMPLETED.fieldApiName] = true ;
+        fields[TM_COMPLETED_DATE.fieldApiName]  = new Date().toISOString.slice(0,10);
+
         let recordInput = {
-            fields : upfields
+            fields : fields
         }
+
         try {
             await updateRecord(recordInput)
             await refreshApex(this.incompleteTasksData);
@@ -204,6 +143,7 @@ export default class ToDo extends LightningElement {
 
             this.showToast('SUCCESS' , `Task completed successfully` , 'success');
             console.log('Records updated succesfully')
+
         } catch (error) {
             console.log('Update operation failed ->', error)
             this.showToast('ERROR' , 'Task could not be completed successfully', 'error');

@@ -1,0 +1,35 @@
+<template>
+  <lightning-card
+    title="Imperative Apex - Update Record"
+    icon-name="custom:custom14"
+  >
+    <div class="slds-grid slds-grid_vertical">
+      <div class="slds-col">
+        <lightning-input
+          type="text"
+          label="Account Name"
+          read-only
+        ></lightning-input>
+      </div>
+
+      <div class="slds-col">
+        <template lwc:if={options.data}>
+          <lightning-combobox
+            label="Sla Type"
+            value={value}
+            options={options.data.values}
+            onchange={handleChange}
+          ></lightning-combobox>
+        </template>
+      </div>
+    </div>
+    <div class="slds-var-p-around_medium">
+      <lightning-button
+        variant="brand"
+        label="Update"
+        onclick={handleClick}
+        class="slds-m-left_x-small"
+      ></lightning-button>
+    </div>
+  </lightning-card>
+</template>

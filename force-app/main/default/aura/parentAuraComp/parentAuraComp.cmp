@@ -1,0 +1,10 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+  <c:childLWC name="MAKUNOICHI IPPO" aura:id="childLWC"></c:childLWC>
+
+  <lightning:button
+    variant="brand"
+    label="Enter"
+    title="Brand action"
+    onclick="{! c.handleClick }"
+  />
+</aura:component>

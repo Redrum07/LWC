@@ -1,0 +1,16 @@
+<template>
+  <lightning-card title="Generate Full Name" icon-name="custom:custom14">
+    <div class="slds-var-p-around_medium">
+      <lightning-input type="text" label="First Name" onchange={handleChange}></lightning-input>
+      <lightning-input type="text" label="Last Name" onchange={handleChange}></lightning-input>
+    </div>
+
+    <div class="slds-var-p-around_medium">
+      <lightning-button
+        variant="brand"
+        label="Send Data to Aura"
+        onclick={handleClick}
+      ></lightning-button>
+    </div>
+  </lightning-card>
+</template>

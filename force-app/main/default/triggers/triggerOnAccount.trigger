@@ -11,7 +11,7 @@ trigger triggerOnAccount on Account (after update) {
             if(!AccountTriggerHandler.isAfterUpdateExecuted){
                 AccountTriggerHandler.isAfterUpdateExecuted = true;
             AccountTriggerHandler.afterUpdateHandler(trigger.new);
-        
+            AccountTriggerHandler.isAfterUpdateExecuted = true;
             }    
         }
     }

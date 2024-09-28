@@ -11,14 +11,16 @@ public with sharing class CaseTriggerHandler {
                 parentCaseIds.add(caseRec.ParentId);
             }
         }
-        CaseTriggerHelper.updateTotalResDaysOnParentCases(parentCaseIds);
+        
+            CaseTriggerHelper.updateTotalResDaysOnParentCases(parentCaseIds);
+        
        
     }
     public static void afterUpdateHandler(List<Case> cases ,Map<Id,Case> oldCases) {
         parentCaseIds = new Set<Id>();
         
         for(Case c : cases){
-            if(c.Resolution_Days__c != oldCases.get(c.Id).Resolution_Days__c ){
+            if(c.Resolution_Days__c != oldCases.get(c.Id).Resolution_Days__c && c.ParentId != null){
                 parentCaseIds.add(c.ParentId);
             }
            
@@ -31,7 +33,9 @@ public with sharing class CaseTriggerHandler {
         }
 
         
+        
             CaseTriggerHelper.updateTotalResDaysOnParentCases(parentCaseIds);
+        
         
     }
     public static void afterDeleteHandler(List<Case> cases) {
@@ -43,7 +47,9 @@ public with sharing class CaseTriggerHandler {
                 parentCaseIds.add(caseRec.ParentId);
             }
         }
-        CaseTriggerHelper.updateTotalResDaysOnParentCases(parentCaseIds);
+        
+            CaseTriggerHelper.updateTotalResDaysOnParentCases(parentCaseIds);
+        
         
     }
     public static void afterUndeleteHandler(List<Case> cases) {
@@ -55,6 +61,8 @@ public with sharing class CaseTriggerHandler {
                 parentCaseIds.add(caseRec.ParentId);
             }
         }
-        CaseTriggerHelper.updateTotalResDaysOnParentCases(parentCaseIds);
+       
+            CaseTriggerHelper.updateTotalResDaysOnParentCases(parentCaseIds);
+        
     }
 }

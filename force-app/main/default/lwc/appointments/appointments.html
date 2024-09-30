@@ -1,0 +1,18 @@
+<template>
+    <lightning-card title="Appointments">
+        <lightning-tabset>
+            <lightning-tab label="Book New">
+                <template if:true={showMap}>
+                    <lightning-map map-markers={mapMarkers}> </lightning-map>
+                </template>
+                <template if:false={showMap}>
+                    Please choose a restuarant !
+                </template>
+            </lightning-tab>
+           
+            <lightning-tab label="Past Appointments">
+                Three Content !
+            </lightning-tab>
+        </lightning-tabset>
+    </lightning-card>
+</template>

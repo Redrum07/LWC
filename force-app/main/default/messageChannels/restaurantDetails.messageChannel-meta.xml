@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel>sendMessage</masterLabel>
+    <isExposed>true</isExposed>
+    <description>This is a sample Lightning Message Channel.</description>
+    <lightningMessageFields>
+        <fieldName>name</fieldName>
+        <description>This is used to transfer the nearest selected restuarnt Name</description>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <fieldName>lat</fieldName>
+        <description>This is used to transfer the nearest selected restuarnt Latitude</description>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <fieldName>long</fieldName>
+        <description>This is used to transfer the nearest selected restuarnt Longitude</description>
+    </lightningMessageFields>
+</LightningMessageChannel>

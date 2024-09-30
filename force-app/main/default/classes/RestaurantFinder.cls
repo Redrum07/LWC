@@ -1,9 +1,8 @@
 public with sharing class RestaurantFinder {
     
-    @auraEnabled(cacheable=true)
-    public static List<YelpResponseWrapper.Businesses> getRestaurants(Id ContactId){
+    @AuraEnabled(cacheable=true)
+    public static List<Object> getRestaurants(Id ContactId){
         
-        List<YelpResponseWrapper.Businesses> business = new List<YelpResponseWrapper.Businesses>();
         Contact contact = [Select name, MailingLatitude , MailingLongitude from Contact where id = :ContactId];
         
         HttpRequest req = new HttpRequest();
@@ -18,9 +17,9 @@ public with sharing class RestaurantFinder {
         'Bearer mh9BX_y0G8IxBT1D3OYBnzrF0jV-D9cbC9eq3RvhcQY_jBjBadeuVXnWPpA6nUzoJF6JQWx3Yf6JcJ63PqhqiK-S_0v_FcgkgWGeoC566ir8f-sMV7SjATWtLkrUZnYx');
 
         HTTPResponse res = http.send(req);
-        YelpResponseWrapper restaurants = YelpResponseWrapper.parse(res.getBody());
-        business = restaurants.businesses;
-        System.debug(business);
-        return business;
+        
+        Map<String,Object> bizMap = (Map<String,Object>) JSON.deserializeUntyped(res.getBody());
+        
+        return (List<Object>) bizMap.get('businesses');
     }
 }

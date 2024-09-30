@@ -1,0 +1,23 @@
+<template>
+  <lightning-card title="Nearest Restaurants">
+    <template lwc:if={restaurants.data}>
+      <template for:each={restaurants.data} for:item="res">
+        <lightning-tile key={res.id} 
+        data-lat={res.coordinates.latitude}
+        data-long={res.coordinates.longitude}
+        data-name={res.name}
+        label={res.name} href="#" type="media" onclick={handleClick}> 
+          <lightning-avatar
+            slot="media"
+            src={res.image_url}
+            size="large"
+            alternative-text={res.name}
+          ></lightning-avatar>
+          <ul class="slds-list_horizontal slds-has-dividers_right">
+            <li class="slds-item">{res.distance} - {res.rating}&star;</li>
+          </ul>
+        </lightning-tile>
+      </template>
+    </template>
+  </lightning-card>
+</template>

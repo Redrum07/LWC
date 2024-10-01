@@ -22,4 +22,19 @@ public with sharing class RestaurantFinder {
         
         return (List<Object>) bizMap.get('businesses');
     }
+
+
+    @AuraEnabled
+    public static void createAppointment(DateTime dt, Id contactId, String duration , String res){
+
+        Event evt = new Event();
+
+        evt.Subject = 'Casual Meeting';
+        evt.WhoId = contactId;
+        evt.StartDateTime = dt;
+        evt.EndDateTime = dt.addHours(Integer.valueOf(duration));
+        evt.Location = res;
+
+        insert evt;
+    }   
 }

@@ -1,18 +1,41 @@
 <template>
-    <lightning-card title="Appointments">
-        <lightning-tabset>
-            <lightning-tab label="Book New">
-                <template if:true={showMap}>
-                    <lightning-map map-markers={mapMarkers}> </lightning-map>
-                </template>
-                <template if:false={showMap}>
-                    Please choose a restuarant !
-                </template>
-            </lightning-tab>
-           
-            <lightning-tab label="Past Appointments">
-                Three Content !
-            </lightning-tab>
-        </lightning-tabset>
-    </lightning-card>
+  <lightning-card title="Appointments">
+    <lightning-tabset>
+      <lightning-tab label="Book New">
+        <template if:true={showMap}>
+          <div class="slds-var-m-around_medium">
+            <lightning-map map-markers={mapMarkers}> </lightning-map>
+          </div>
+          <div class="slds-var-m-around_medium">
+            <lightning-input
+              type="datetime"
+              name="AppointmentDate"
+              label="Enter a date/time value"
+              onchange={handleChange}
+            ></lightning-input>
+            <lightning-input
+              type="number"
+              name="Duration"
+              label="Enter duration of meeting"
+              onchange={handleChange}
+            ></lightning-input>
+          </div>
+          <div class="slds-var-m-around_medium">
+            <lightning-button
+              variant="brand"
+              label="Book Appointment"
+              onclick={handleClick}
+            ></lightning-button>
+          </div>
+        </template>
+        <template if:false={showMap}>
+          <div class="slds-var-m-around_medium">
+            Please choose a restuarant !
+          </div>
+        </template>
+      </lightning-tab>
+
+      <lightning-tab label="Past Appointments"> Nothing to show </lightning-tab>
+    </lightning-tabset>
+  </lightning-card>
 </template>

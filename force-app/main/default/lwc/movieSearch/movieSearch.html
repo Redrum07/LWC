@@ -1,0 +1,55 @@
+<template>
+        <div class="c-container" >
+            <lightning-layout horizontal-align="space" >
+                <lightning-layout-item padding="around-small" size='3'>
+                    <lightning-combobox
+                        name="type"
+                        label="Type"
+                        value={selectedOption}
+                        placeholder="Type"
+                        options={options}
+                        onchange={handleChange}
+                        required
+                    ></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size='7'>
+                    <lightning-input
+                    name="search"
+                    label="Search Title"
+                    type="search"
+                    value={searchKey}
+                    is-loading = {loading}
+                    onchange={handleChange}
+                    ></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size='2'>
+                    <lightning-input 
+                    type="number" 
+                    name="page" 
+                    label="Page" 
+                    value ={pageNum}
+                    min="1"
+                    max="100"
+                    step="1"
+                    message-when-range-overflow="Max page is 100"
+                    message-when-range-underflow="Min page is 1"
+                    onchange={handleChange}
+                    ></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    <template lwc:if={displaySearchResults} >
+        <div class="slds-var-m-top_large slds-scrollable_y slds-box displayStyle">
+            <lightning-layout horizontal-align="center" multiple-rows="true">
+            <template for:each={movieResults} for:item="movies">
+                <lightning-layout-item key={movies.imdbID} padding="around-small" size='3'> 
+                    <c-movie-tiles movie={movies} onclick={handleSelectedItem} 
+                    selected-id ={selectedId}
+                    ></c-movie-tiles>
+                </lightning-layout-item>
+            </template>
+          </lightning-layout>
+        </div>
+    </template>
+    
+</template>

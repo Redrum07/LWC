@@ -1,4 +1,6 @@
-import { LightningElement, api } from "lwc";
+import { LightningElement, wire } from "lwc";
+import { publish, MessageContext } from 'lightning/messageService';
+import movieSelected from '@salesforce/messageChannel/movieDetails__c';
 const DELAY = 500;
 export default class MovieSearch extends LightningElement {
   selectedOption = "";
@@ -8,6 +10,10 @@ export default class MovieSearch extends LightningElement {
   timer;
   movieResults = [];
   selectedId = "";
+
+  @wire(MessageContext)
+  messageContext;
+
   get options() {
     return [
       { label: "None", value: "" },
@@ -37,8 +43,13 @@ export default class MovieSearch extends LightningElement {
         this.getResults();
       }, DELAY);
     }
+    else{
+      this.loading = false;
+      this.movieResults = [];
+    }
   }
 
+  
   async getResults() {
     const url = `http://www.omdbapi.com/?apikey=776741e&s=${this.searcKey}&type=${this.selectedOption}&page=${this.pageNum}`;
 
@@ -59,5 +70,12 @@ export default class MovieSearch extends LightningElement {
 
   handleSelectedItem(event){
     this.selectedId = event.detail;
+
+    const payload = {
+      movieId: this.selectedId
+    };
+    publish(this.messageContext, movieSelected, payload);
   }
+
+  
 }

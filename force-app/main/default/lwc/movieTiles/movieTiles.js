@@ -5,7 +5,8 @@ export default class MovieTiles extends LightningElement {
     @api movie;
     @api selectedId;
     clickHandler(event){
-        this.dispatchEvent( new CustomEvent( click,
+        
+        this.dispatchEvent( new CustomEvent( 'selectedmovie',
             {
                 detail : this.movie.imdbID
             }
@@ -14,7 +15,7 @@ export default class MovieTiles extends LightningElement {
 
     get highLight(){
 
-        return this.imddID === this.selectedId ? 'tileSelected' : 'tile';
+        return this.movie.imdbID === this.selectedId ? 'tileSelected' : 'tile';
     
         }
     

@@ -43,7 +43,7 @@
             <lightning-layout horizontal-align="center" multiple-rows="true">
             <template for:each={movieResults} for:item="movies">
                 <lightning-layout-item key={movies.imdbID} padding="around-small" size='3'> 
-                    <c-movie-tiles movie={movies} onclick={handleSelectedItem} 
+                    <c-movie-tiles movie={movies} onselectedmovie={handleSelectedItem} 
                     selected-id ={selectedId}
                     ></c-movie-tiles>
                 </lightning-layout-item>

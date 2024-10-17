@@ -10,7 +10,8 @@ export default class MovieDetails extends LightningElement {
 
     movieID;
     subscription = null;
-
+    movieDetails = [];
+    loadComp = false;
     @wire(MessageContext)
     messageContext;
 
@@ -42,7 +43,13 @@ export default class MovieDetails extends LightningElement {
         const result = await fetch(url);
         const data = await result.json();
         
-        console.log('data' , data);
-    
+        console.log('data' , data.Poster);
+        if(data.Response === 'True'){
+            
+            this.movieDetails = data;
+            this.loadComp = true;
+        }
       }
+
+     
 }

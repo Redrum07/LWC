@@ -1,5 +1,5 @@
 public with sharing class ContactTriggerHelper {
-    public static void commonMethod(Map<Id,Contact> phoneByContact , Map<Id,Contact> emailByContact){
+    public static void commonMethod(Map<String,Contact> phoneByContact , Map<String,Contact> emailByContact){
         List<Contact> existingContacts = [SELECT id FROM CONTACT WHERE 
                                         Phone IN : phoneByContact.keySet() OR
                                         Email IN : emailByContact.keySet()
@@ -20,6 +20,5 @@ public with sharing class ContactTriggerHelper {
         }
     }
 
-	public static void commonMethod(Map<String,Contact> phoneByContact, Map<String,Contact> emailByContact){
-	} 
+	
 }

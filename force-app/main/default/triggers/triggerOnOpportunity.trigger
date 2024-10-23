@@ -4,7 +4,7 @@ with the customer, schedule a welcome call and send a thank you email
 Also update the next steps on Opportunity to "Onboard a contract"
 */
 
-trigger triggerOnOpportunity on Opportunity (before insert , after insert, before update, after update) {
+trigger triggerOnOpportunity on Opportunity (before insert , after insert, before update, after update , after delete, after undelete) {
 
     // switch on Trigger.operationType {
     //     when BEFORE_INSERT , BEFORE_UPDATE{

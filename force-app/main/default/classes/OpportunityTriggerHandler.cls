@@ -56,15 +56,29 @@ public with sharing class OpportunityTriggerHandler {
           processedOpportunityIds.add(opp.Id);
         }
       }
+    System.debug('related>>>>'+ relatedAccountIds);
+         
     }
     if(!relatedAccountIds.isEmpty()){
+        System.debug('in the helper');
         OpportunityTriggerHelper.updateRelatedAccountWithOpportunityAmount(relatedAccountIds);
-
+		
     }
   } 
 
   public static void afterUndeleteHandler(List<Opportunity> opportunities){
+	
+    Set<Id>  relatedAccountIds = new Set<Id>();
 
-    afterInsertHandler(opportunities);
+        for (Opportunity opp : opportunities) {
+            if (opp.Amount != null && opp.AccountId != null && !processedOpportunityIds.contains(opp.id)) {
+                relatedAccountIds.add(opp.AccountId);
+                processedOpportunityIds.add(opp.Id);
+            }
+        }
+
+        if(!relatedAccountIds.isEmpty()) {
+        OpportunityTriggerHelper.updateRelatedAccountWithOpportunityAmount(relatedAccountIds);
+        }
   }
-}   
+}

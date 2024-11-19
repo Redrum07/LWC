@@ -1,0 +1,46 @@
+<template>
+  <lightning-card title="DataTableExample" icon-name="custom:custom15">
+    <div class="slds-p-around_medium">
+      <lightning-datatable
+        data={contacts}
+        columns={columns}
+        key-field="Id"
+        onrowselection={getSelectedName}
+      >
+      </lightning-datatable>
+    </div>
+    <template lwc:if={showBar}>
+      <div class="slds-p-around_medium">
+        <div class="slds-grid slds-grid_align-center">
+          <div class="slds-col">
+            <lightning-button
+              label="First"
+              onclick={handleFirst}
+             
+            ></lightning-button>
+          </div>
+          <div class="slds-col">
+            <lightning-button
+              label="Previous"
+              onclick={handlePrev}
+              disabled={disablePrev}
+            ></lightning-button>
+          </div>
+          <div class="slds-col">
+            <lightning-button
+              label="Next"
+              onclick={handleNext}
+              disabled={disableNext}
+            ></lightning-button>
+          </div>
+          <div class="slds-col">
+            <lightning-button
+              label="Last"
+              onclick={handleLast}
+            ></lightning-button>
+          </div>
+        </div>
+      </div>
+    </template>
+  </lightning-card>
+</template>

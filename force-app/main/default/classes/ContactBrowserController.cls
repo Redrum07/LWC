@@ -27,4 +27,16 @@ public with sharing class ContactBrowserController {
         return con;
         
     }
+
+    @AuraEnabled(cacheable = true)
+    public static List<Contact> getContactsLimited(){
+        try {
+            List<Contact> conList = new List<Contact>();
+            conList = [Select Name, Account.Name, Email, Phone FROM Contact WHERE AccountId != null ];
+          
+            return conList;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
 }

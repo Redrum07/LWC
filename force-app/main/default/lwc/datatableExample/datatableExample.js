@@ -2,7 +2,7 @@ import { LightningElement, wire } from "lwc";
 import getContactsLimited from "@salesforce/apex/ContactBrowserController.getContactsLimited";
 
 const columns = [
-  { label: "Name", fieldName: "Name", type: "Name" },
+  { label: "Name", fieldName: "Name", type: "text", sortable: true },
   {
     label: "Account",
     fieldName: "accountLink",
@@ -18,13 +18,14 @@ const columns = [
 ];
 export default class DatatableExample extends LightningElement {
   contacts;
-  records
+  records;
   columns = columns;
   currentPage = 1;
   totalPages = 1;
-  numberPerPage = 10; 
-  disablePrev = true;
-  disableNext = false;
+  numberPerPage = 10;
+
+  sortedBy;
+  sortedDirection;
 
   @wire(getContactsLimited)
   wiredContacts({ data, error }) {
@@ -40,61 +41,62 @@ export default class DatatableExample extends LightningElement {
       console.log(error);
     }
   }
-  
 
-  get showBar(){
-    return this.totalPages>1;
+  get showBar() {
+    return this.totalPages > 1;
   }
 
-  getSelectedName(event) {
-    console.log(event.detail);
+  get disableNext() {
+    return this.currentPage >= this.totalPages;
+  }
+
+  get disablePrev() {
+    return this.currentPage <= 1;
   }
 
   handleFirst(event) {
-    this.currentPage = 1 ;
+    this.currentPage = 1;
     this.loadRecords();
-    this.disablePrev = true;
-    this.disableNext = false;
   }
 
   handleLast(event) {
     this.currentPage = this.totalPages;
     this.loadRecords();
-    this.disablePrev = false;
-    this.disableNext = true;
-    
   }
 
-  handlePrev(event) {  
-    if(this.currentPage<=1){
-      this.disablePrev = true;
-      return;
-    }
-    if(this.currentPage <= this.totalPages){
-      this.disableNext = false;
-    }
+  handlePrev(event) {
+    if (this.currentPage > 1) {
       this.currentPage--;
       this.loadRecords();
-      
+    }
   }
 
   handleNext(event) {
-    if(this.currentPage == this.totalPages){
-      this.disableNext = true;
-      return;
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.loadRecords();
     }
-    if(this.currentPage >= 1){
-      this.disablePrev = false;
-    }
-    this.currentPage++;
-    this.loadRecords();
   }
 
-  loadRecords(){
-    let begin = (this.currentPage - 1 )*this.numberPerPage;
+  loadRecords() {
+    let begin = (this.currentPage - 1) * this.numberPerPage;
     let end = begin + this.numberPerPage;
 
-    this.contacts = this.records.slice(begin,end);
+    this.contacts = this.records.slice(begin, end);
+  }
 
+  handleSort(event) {
+    this.sortedBy = event.detail.fieldName;
+    this.sortedDirection = event.detail.sortDirection;
+    this.records = [...this.records].sort((a, b) => {
+      let val1 = String(a[this.sortedBy] || "");
+      let val2 = String(b[this.sortedBy] || "");
+
+      return this.sortedDirection === "asc"
+        ? val1.localeCompare(val2)
+        : val2.localeCompare(val1);
+    });
+
+    this.loadRecords();
   }
 }

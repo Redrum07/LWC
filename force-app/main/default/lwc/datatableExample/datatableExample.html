@@ -5,7 +5,9 @@
         data={contacts}
         columns={columns}
         key-field="Id"
-        onrowselection={getSelectedName}
+        onsort={handleSort}
+        sorted-by={sortedBy}
+        sorted-direction={sortedDirection}
       >
       </lightning-datatable>
     </div>
@@ -16,7 +18,6 @@
             <lightning-button
               label="First"
               onclick={handleFirst}
-             
             ></lightning-button>
           </div>
           <div class="slds-col">
